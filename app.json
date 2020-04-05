@@ -3,8 +3,8 @@
     "ret": 1,
     "apiver": 9,
     "name": "[FJT / CTNET] 运势",
-    "version": "1.0.0",
-    "version_id": 1,
+    "version": "1.1.0",
+    "version_id": 2,
     "author": "BillZhou233 / Fujao-time",
     "description": "简易的每日运势组件，使用前务必阅读说明书。(Bug多多警告)\r\n开发: Fujao-time 编辑部 (由于没社区号只能让大佬帮忙发行的屑作者)\r\n发行: CatNetwork (大佬)",
     "event": [ // 可以修改 priority 来调整插件的优先级, 其它字段不可修改, 否则将无法使用
