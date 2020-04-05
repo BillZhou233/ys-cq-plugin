@@ -69,7 +69,7 @@ namespace ys {
                 }
                 lst2[rnd[i]].vis = true;
             }
-            std::string res = "今天的运势（仅供参考）：" + ys_type[rnd[0]] + "\n"
+            res = "今天的运势（仅供参考）：" + ys_type[rnd[0]] + "\n"
                               + ((rnd[0] == 4) ? ("诸事不宜")
                                                : ("宜：" + lst2[rnd[1]].name + "/" + lst2[rnd[1]].good + "\n宜："
                                                   + lst2[rnd[2]].name + "/" + lst2[rnd[2]].good))
