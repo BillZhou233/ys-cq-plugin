@@ -29,33 +29,38 @@ namespace ys {
     static const std::string ys_type[5] = {"大吉","中吉","小吉","凶","大凶"};
 
     ull load_txt_data() {
+        loaded = false;
         auto fdir = dir::app();
         fdir = fdir + "ys_list.txt";
         logging::info("运势路径", fdir);
         ifstream inp;
         inp.open(fdir);
-        ull n;
-        inp >> n;
-        if (n >= 4) {
-            ys_item wait;
-            wait.vis = false;
-            for (register ull i = 1; i <= n; ++i) {
-                inp >> wait.name >> wait.good >> wait.bad;
-                lst.push_back(wait);
+        if (inp) {
+            ull n;
+            inp >> n;
+            if (n >= 4) {
+                ys_item wait;
+                wait.vis = false;
+                for (register ull i = 1; i <= n; ++i) {
+                    inp >> wait.name >> wait.good >> wait.bad;
+                    lst.push_back(wait);
+                }
+                logging::info("加载成功", "文件已载入。");
+                loaded = true;
+            } else {
+                logging::error("加载失败", "n 必须大于等于 4。");
             }
-            logging::info("加载成功", "文件已载入。");
-            loaded = true;
+            inp.close();
         } else {
-            logging::info("加载失败", "n 必须大于等于 4。");
+            logging::error("加载失败", "请检查路径。");
         }
-        inp.close();
         return 0;
     }
 
     std::string get_context(ull uid) {
         std::string res = "配置文件似乎出了点小问题的说，快点告诉主人吧~";
         if (loaded) {
-            ull dt = (time(NULL) + 28800) / 86400; // date
+            ull dt = (time(NULL) + 57600) / 86400; // date
             ull mt_seed = (((dt * 998244353) % 1000000007) ^ uid) % 4294967295;
             init_genrand(mt_seed);
             vector<ys_item> lst2 = lst;
@@ -77,6 +82,8 @@ namespace ys {
                               + ((rnd[0] == 0) ? ("万事皆宜")
                                                : ("忌：" + lst2[rnd[3]].name + "/" + lst2[rnd[3]].bad + "\n忌："
                                                   + lst2[rnd[4]].name + "/" + lst2[rnd[4]].bad));
+            if (rnd[0] == 0) res += "\n即使大吉，也不能太浪的说~";
+            if (rnd[0] == 4) res += "\n大凶也不要紧，本机也会一直保佑你的~";
         }
         return res;
     }
